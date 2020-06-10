@@ -101,13 +101,23 @@ void updateCell(size_t r, size_t c)
 	size_t live_neighbours = countLiveNeighbours(r, c);
 
 	// your code goes here
-	for (size_t i=1; i<=r+1;i++)
-	{
-		for (size_t j=1;j<=c+1;j++)
+		if (live_neighbours==3 && live_neighbours==0)
 		{
-			if ()
+			state_cell=live;
+			env[r][c]=state_cell;
 		}
-	}
+		else
+		{
+			if (live_neighbours<2 || live_neighbours>3)
+			{
+				state_cell=dead;
+				env[r][c]=state_cell;
+			}
+			else
+			{
+				env[r][c]=state_cell;
+			}
+		}
 }
 
 /*
