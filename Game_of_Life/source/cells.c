@@ -70,9 +70,9 @@ size_t countLiveNeighbours(size_t row, size_t col)
 		{
 			/*cell_count=env[i-1][j-1]+env[i-1][j]+env[i-1][j+1]+env[i][j-1]+env[i][j+1]+
 					env[i+1][j-1]+env[i+1][j]+env[i+1][j+1];*/
-			cell_count+=env[i][j];
+			cell_count+=(size_t)env[i][j];
 		}
-	cell_count-=env[row][col]; // A cell is not its own neighbour
+	cell_count-=(size_t)env[row][col]; // A cell is not its own neighbour
 	}
 
 	return cell_count;
@@ -183,4 +183,5 @@ void* updateCommFunc(void *param)
 {
 
 	// your code goes here
+
 }
