@@ -64,7 +64,15 @@ size_t countLiveNeighbours(size_t row, size_t col)
 
 	// your code goes here
 
-
+	for (size_t i=1; i<=row+1;i++)
+	{
+		for (size_t j=1;j<=col+1;j++)
+		{
+			/*cell_count=env[i-1][j-1]+env[i-1][j]+env[i-1][j+1]+env[i][j-1]+env[i][j+1]+
+					env[i+1][j-1]+env[i+1][j]+env[i+1][j+1];*/
+			cell_count+=env[i][j];
+		}
+	}
 
 	return cell_count;
 }
@@ -92,6 +100,13 @@ void updateCell(size_t r, size_t c)
 	size_t live_neighbours = countLiveNeighbours(r, c);
 
 	// your code goes here
+	for (size_t i=1; i<=r+1;i++)
+	{
+		for (size_t j=1;j<=c+1;j++)
+		{
+			if ()
+		}
+	}
 }
 
 /*
@@ -110,7 +125,7 @@ void initEnvironment(void)
 	cell_t datum;
 	cell_t community_init[config_NC][config_MC];
 
-	printf("\Initializing environment...\n");
+	printf("\nInitializing environment...\n");
 	printf("     ... loading template community from stdin\n");
 	for (size_t i = 0; i != config_NC; ++i)
 	{
