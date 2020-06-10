@@ -52,7 +52,7 @@ void transferCommunity(size_t iT, size_t jT,
  * at row r and column c of the env array
  *
  * for reference, neighbours are designated as follows:
- *     		a b c
+ *     		    a b c
  *              d X e
  *              f g h
  *
@@ -63,6 +63,8 @@ size_t countLiveNeighbours(size_t row, size_t col)
 	size_t cell_count = 0;
 
 	// your code goes here
+
+
 
 	return cell_count;
 }
@@ -108,7 +110,7 @@ void initEnvironment(void)
 	cell_t datum;
 	cell_t community_init[config_NC][config_MC];
 
-	printf("\ninitializing environment...\n");
+	printf("\Initializing environment...\n");
 	printf("     ... loading template community from stdin\n");
 	for (size_t i = 0; i != config_NC; ++i)
 	{
