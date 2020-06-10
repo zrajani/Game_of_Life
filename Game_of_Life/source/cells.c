@@ -72,6 +72,7 @@ size_t countLiveNeighbours(size_t row, size_t col)
 					env[i+1][j-1]+env[i+1][j]+env[i+1][j+1];*/
 			cell_count+=env[i][j];
 		}
+	cell_count-=env[row][col]; // A cell is not its own neighbour
 	}
 
 	return cell_count;
