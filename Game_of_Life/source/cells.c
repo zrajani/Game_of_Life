@@ -70,7 +70,7 @@ size_t countLiveNeighbours(size_t row, size_t col)
 		{
 			/*cell_count=env[i-1][j-1]+env[i-1][j]+env[i-1][j+1]+env[i][j-1]+env[i][j+1]+
 					env[i+1][j-1]+env[i+1][j]+env[i+1][j+1];*/
-			cell_count+=(size_t)env[i][j];
+
 		}
 	cell_count-=(size_t)env[row][col]; // A cell is not its own neighbour
 	}
@@ -104,7 +104,7 @@ void updateCell(size_t r, size_t c)
 		if (live_neighbours==3 && live_neighbours==0)
 		{
 			state_cell=live;
-			env[r][c]=state_cell;
+			env[r][c]=state_cell=reproduction_flag;
 		}
 		else
 		{
