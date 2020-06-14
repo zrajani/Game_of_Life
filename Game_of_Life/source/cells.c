@@ -63,16 +63,19 @@ size_t countLiveNeighbours(size_t row, size_t col)
 	size_t cell_count = 0;
 
 	// your code goes here
-
+	/*cell_count=env[i-1][j-1]+env[i-1][j]+env[i-1][j+1]+env[i][j-1]+env[i][j+1]+
+			env[i+1][j-1]+env[i+1][j]+env[i+1][j+1];*/ // Just a comment can ignore!!
 	for (size_t i=1; i<=row+1;i++)
 	{
 		for (size_t j=1;j<=col+1;j++)
 		{
-			/*cell_count=env[i-1][j-1]+env[i-1][j]+env[i-1][j+1]+env[i][j-1]+env[i][j+1]+
-					env[i+1][j-1]+env[i+1][j]+env[i+1][j+1];*/
-
+			// To make sure that you don't count the cell whose neighbours are counted
+			if (i!=0 && j!=0)
+			{
+				cell_count = cell_count +(size_t)env [(i+config_NC)%config_NC][(j+config_MC)%config_MC];
+			}
 		}
-	cell_count-=(size_t)env[row][col]; // A cell is not its own neighbour
+	//cell_count-=(size_t)env[row][col]; // A cell is not its own neighbour
 	}
 
 	return cell_count;
