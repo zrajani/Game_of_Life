@@ -33,7 +33,6 @@ void transferCommunity(size_t iT, size_t jT,
 {
 	size_t i_0 = iT * config_NC;
 	size_t j_0 = jT * config_MC;
-
 	printf("     ... transferring block (%d, %d)\n", (int) (iT + 1),
 			(int) (jT + 1));
 	// copy this community to each community in env to initialize it
@@ -184,6 +183,16 @@ void copyEnvironment(void)
  */
 void* updateCommFunc(void *param)
 {
+	while (1)
+	{
+		for (size_t i=0; i<config_NC; i++)
+		{
+			for (size_t j=0; j<config_ME; j++)
+			{
+				updateCell(i,j);
+			}
+		}
+	}
 
 	// your code goes here
 
