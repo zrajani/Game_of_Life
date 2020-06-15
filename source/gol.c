@@ -45,7 +45,9 @@ int main(void)
 	{
 		for (size_t j = 0; j != config_L; ++j)
 		{
+
 			index = i * config_L + j; // map (i,j) to an 1-d index
+			printf("\ncreating threads...%d\n",(int)index);
 			threadID[index].row = i;
 			threadID[index].col = j;
 			// the following if condition returns 0 on the successful creation of each thread:

@@ -106,7 +106,7 @@ void updateCell(size_t r, size_t c)
 		if (live_neighbours==3 && live_neighbours==0)
 		{
 			state_cell=live;
-			env[r][c]=state_cell=reproduction_flag;
+			env[r][c]=state_cell;
 		}
 		else
 		{
