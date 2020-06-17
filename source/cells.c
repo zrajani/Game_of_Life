@@ -103,23 +103,20 @@ void updateCell(size_t r, size_t c)
 	size_t live_neighbours = countLiveNeighbours(r, c);
 
 	// your code goes here
-		if (live_neighbours==3 && live_neighbours==0)
+	if (live_neighbours<=3 && live_neighbours>=2)
+	{
+		reproduction_flag=true;
+		if (state_cell)
 		{
-			state_cell=live;
-			env[r][c]=state_cell;
+			update_env[r][c]=live;
 		}
-		else
+		else if (state_cell==false&&live_neighbours==3)
 		{
-			if (live_neighbours<2 || live_neighbours>3)
-			{
-				state_cell=dead;
-				env[r][c]=state_cell;
-			}
-			else
-			{
-				env[r][c]=state_cell;
-			}
+			update_env[r][c]=live;
 		}
+	}
+	else { update_env[r][c]=dead;
+	reproduction_flag=false;}
 }
 
 /*
@@ -185,13 +182,16 @@ void* updateCommFunc(void *param)
 {
 	while (1)
 	{
+		//if (reproduction_flag==true){
 		for (size_t i=0; i<config_NC; i++)
 		{
 			for (size_t j=0; j<config_ME; j++)
 			{
 				updateCell(i,j);
+
 			}
 		}
+	//}
 	}
 
 	// your code goes here
