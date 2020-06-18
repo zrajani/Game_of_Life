@@ -103,20 +103,49 @@ void updateCell(size_t r, size_t c)
 	size_t live_neighbours = countLiveNeighbours(r, c);
 
 	// your code goes here
-	if (live_neighbours<=3 && live_neighbours>=2)
+	/*if (live_neighbours<=3 && live_neighbours>=2)
+		{
+			reproduction_flag=true;
+			if (state_cell)
+			{
+				update_env[r][c]=live;
+			}
+			else if (state_cell==false&&live_neighbours==3)
+			{
+				update_env[r][c]=live;
+			}
+		}
+		else { update_env[r][c]=dead;
+		reproduction_flag=false;}*/
+	if (state_cell==0 && live_neighbours==3)
 	{
+		update_env[r][c]=state_cell=live;
 		reproduction_flag=true;
-		if (state_cell)
-		{
-			update_env[r][c]=live;
-		}
-		else if (state_cell==false&&live_neighbours==3)
-		{
-			update_env[r][c]=live;
-		}
 	}
-	else { update_env[r][c]=dead;
-	reproduction_flag=false;}
+	else if (state_cell==1 && (live_neighbours>4||live_neighbours<=2))
+	{
+		update_env[r][c]=state_cell=dead;
+		reproduction_flag=false;
+	}
+	else
+	{
+		update_env[r][c]=state_cell;
+		reproduction_flag=false;
+	}
+
+	/*if ((state_cell=dead)&&(live_neighbours==3||live_neighbours==0))
+	{
+		state_cell = live;
+		env[r][c]=state_cell;
+	}
+	else if ((state_cell == live) && ( (live_neighbours > 4) || (live_neighbours < 2) ))
+	{
+		state_cell = dead;
+		env[r][c]=state_cell;
+	}*/
+
+
+
 }
 
 /*
@@ -182,18 +211,22 @@ void* updateCommFunc(void *param)
 {
 	while (1)
 	{
-		//if (reproduction_flag==true){
-		for (size_t i=0; i<config_NC; i++)
+		if (reproduction_flag)
 		{
-			for (size_t j=0; j<config_ME; j++)
+			threadID_t *var=param;
+			size_t i_0=var->row;
+			size_t j_0=var->col;
+			size_t a=i_0*config_NC;
+			size_t b=j_0*config_MC;
+			for (size_t i=0;i!=config_NC;++i)
 			{
-				updateCell(i,j);
-
+				for (size_t j=0;j!=config_MC;++j)
+				{
+					updateCell(i+a,j+b);
+				}
 			}
 		}
-	//}
 	}
 
 	// your code goes here
-
 }
