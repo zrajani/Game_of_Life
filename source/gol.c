@@ -32,52 +32,52 @@ WINDOW *win;
  */
 int main(void)
 {
-	pthread_t threadptrs[config_K * config_L]; // our thread handles
-	threadID_t threadID[config_K * config_L]; // thread ID
+  pthread_t threadptrs[config_K * config_L]; // our thread handles
+  threadID_t threadID[config_K * config_L]; // thread ID
 
-	// initialize workspace
-	initEnvironment();
+  // initialize workspace
+  initEnvironment();
 
-	// create the threads
-	printf("\ncreating threads...\n");
-	size_t index;
-	for (size_t i = 0; i != config_K; ++i)
+  // create the threads
+  printf("\ncreating threads...\n");
+  size_t index;
+  for (size_t i = 0; i != config_K; ++i)
+    {
+      for (size_t j = 0; j != config_L; ++j)
 	{
-		for (size_t j = 0; j != config_L; ++j)
-		{
 
-			index = i * config_L + j; // map (i,j) to an 1-d index
-			printf("\ncreating threads...%d\n",(int)index);
-			threadID[index].row = i;
-			threadID[index].col = j;
-			// the following if condition returns 0 on the successful creation of each thread:
-			if (pthread_create(&threadptrs[index], NULL, &updateCommFunc,
-					&threadID[index]) != 0)
-			{
-				printf("failed to create the thread %d\n", (int) index);
-				return 1;
-			}
-		}
+	  index = i * config_L + j; // map (i,j) to an 1-d index
+	  printf("\ncreating threads...%d\n",(int)index);
+	  threadID[index].row = i;
+	  threadID[index].col = j;
+	  // the following if condition returns 0 on the successful creation of each thread:
+	  if (pthread_create(&threadptrs[index], NULL, &updateCommFunc,
+			     &threadID[index]) != 0)
+	    {
+	      printf("failed to create the thread %d\n", (int) index);
+	      return 1;
+	    }
 	}
+    }
 
-	// initialize display with ncurses
-	initDisplay();
+  // initialize display with ncurses
+  initDisplay();
 
-	unsigned short int ctr = 0;
-	while (1)
+  unsigned short int ctr = 0;
+  while (1)
+    {
+      reproduction_flag = true;
+      usleep(config_TL / 2); // allow new generation to check in
+      reproduction_flag = false;
+      usleep(config_TL / 2); // put a hold on reproduction to update display
+      if (++ctr == config_TDISP)
 	{
-		reproduction_flag = true;
-		usleep(config_TL / 2); // allow new generation to check in
-		reproduction_flag = false;
-		usleep(config_TL / 2); // put a hold on reproduction to update display
-		if (++ctr == config_TDISP)
-		{
-			ctr = 0;
-			updateDisplay();
-		}
-		copyEnvironment(); // write changes to the environment, env, from update_env
+	  ctr = 0;
+	  updateDisplay();
 	}
+      copyEnvironment(); // write changes to the environment, env, from update_env
+    }
 
-	// should never arrive here;
-	return 1;
+  // should never arrive here;
+  return 1;
 }

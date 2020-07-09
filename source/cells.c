@@ -28,22 +28,23 @@ extern bool reproduction_flag;
  * transfer a single community identified by the block-pair (iT,jT) to env and
  * update_env using data_init[][]
  */
-void transferCommunity(size_t iT, size_t jT,
-		const cell_t data_init[config_NC][config_MC])
+void
+transferCommunity (size_t iT, size_t jT,
+		   const cell_t data_init[config_NC][config_MC])
 {
-	size_t i_0 = iT * config_NC;
-	size_t j_0 = jT * config_MC;
-	printf("     ... transferring block (%d, %d)\n", (int) (iT + 1),
-			(int) (jT + 1));
-	// copy this community to each community in env to initialize it
-	for (size_t i = 0; i != config_NC; ++i)
+  size_t i_0 = iT * config_NC;
+  size_t j_0 = jT * config_MC;
+  printf ("     ... transferring block (%d, %d)\n", (int) (iT + 1),
+	  (int) (jT + 1));
+  // copy this community to each community in env to initialize it
+  for (size_t i = 0; i != config_NC; ++i)
+    {
+      for (size_t j = 0; j != config_MC; ++j)
 	{
-		for (size_t j = 0; j != config_MC; ++j)
-		{
-			env[i_0 + i][j_0 + j] = update_env[i_0 + i][j_0 + j] =
-					data_init[i][j];
-		}
+	  env[i_0 + i][j_0 + j] = update_env[i_0 + i][j_0 + j] =
+	      data_init[i][j];
 	}
+    }
 }
 
 /*
@@ -57,27 +58,22 @@ void transferCommunity(size_t iT, size_t jT,
  *
  *
  */
-size_t countLiveNeighbours(size_t row, size_t col)
+size_t countLiveNeighbours (size_t row, size_t col)
 {
-	size_t cell_count = 0;
+  size_t cell_count = 0;
 
-	// your code goes here
-	/*cell_count=env[i-1][j-1]+env[i-1][j]+env[i-1][j+1]+env[i][j-1]+env[i][j+1]+
-			env[i+1][j-1]+env[i+1][j]+env[i+1][j+1];*/ // Just a comment can ignore!!
-	for (size_t i=row-1; i<=row+1;i++)
+  for (size_t i = row - 1; i <= row + 1; i++)
+    {
+      for (size_t j = col - 1; j <= col + 1; j++)
 	{
-		for (size_t j=col-1;j<=col+1;j++)
-		{
-			// To make sure that you don't count the cell whose neighbours are counted
-			if (i!=0 && j!=0)
-			{
-				cell_count = cell_count +(size_t)env [(i+config_NC)%config_NC][(j+config_MC)%config_MC];
-			}
-		}
-	//cell_count-=(size_t)env[row][col]; // A cell is not its own neighbour
+	  // To make sure that you don't count the cell whose neighbours are counted
+	  if (i != 0 && j != 0)
+	    {
+	      cell_count = cell_count + (size_t) env[(i + config_NC) % config_NC][(j + config_MC)% config_MC];
+	    }
 	}
-
-	return cell_count;
+    }
+  return cell_count;
 }
 
 /*
@@ -97,55 +93,19 @@ size_t countLiveNeighbours(size_t row, size_t col)
  * 		  have exactly three neighbours to survive)
  *
  */
-void updateCell(size_t r, size_t c)
+void updateCell (size_t r, size_t c)
 {
-	cell_t state_cell = env[r][c];
-	size_t live_neighbours = countLiveNeighbours(r, c);
+  cell_t state_cell = env[r][c];
+  size_t live_neighbours = countLiveNeighbours (r, c);
 
-	// your code goes here
-	/*if (live_neighbours<=3 && live_neighbours>=2)
-		{
-			reproduction_flag=true;
-			if (state_cell)
-			{
-				update_env[r][c]=live;
-			}
-			else if (state_cell==false&&live_neighbours==3)
-			{
-				update_env[r][c]=live;
-			}
-		}
-		else { update_env[r][c]=dead;
-		reproduction_flag=false;}*/
-	if (state_cell==0 && live_neighbours==3)
-	{
-		update_env[r][c]=state_cell=live;
-		reproduction_flag=true;
-	}
-	else if (state_cell==1 && (live_neighbours>4||live_neighbours<=2))
-	{
-		update_env[r][c]=state_cell=dead;
-		reproduction_flag=false;
-	}
-	else
-	{
-		update_env[r][c]=state_cell;
-		reproduction_flag=false;
-	}
-
-	/*if ((state_cell=dead)&&(live_neighbours==3||live_neighbours==0))
-	{
-		state_cell = live;
-		env[r][c]=state_cell;
-	}
-	else if ((state_cell == live) && ( (live_neighbours > 4) || (live_neighbours < 2) ))
-	{
-		state_cell = dead;
-		env[r][c]=state_cell;
-	}*/
-
-
-
+  if (state_cell == 0 && (live_neighbours == 3))
+    {
+      update_env[r][c] = live;
+    }
+  else if (state_cell == 1 && (live_neighbours > 4 || live_neighbours <= 2))
+    {
+      update_env[r][c] = dead;
+    }
 }
 
 /*
@@ -157,76 +117,74 @@ void updateCell(size_t r, size_t c)
  * the size of a community; 9999 indicates end of file;
  * run this before started ncurses environment;
  */
-void initEnvironment(void)
+void initEnvironment (void)
 {
-	// start by reading in a single community
-	int token;
-	cell_t datum;
-	cell_t community_init[config_NC][config_MC];
+  // start by reading in a single community
+  int token;
+  cell_t datum;
+  cell_t community_init[config_NC][config_MC];
 
-	printf("\nInitializing environment...\n");
-	printf("     ... loading template community from stdin\n");
-	for (size_t i = 0; i != config_NC; ++i)
+  printf ("\nInitializing environment...\n");
+  printf ("     ... loading template community from stdin\n");
+  for (size_t i = 0; i != config_NC; ++i)
+    {
+      for (size_t j = 0; j != config_MC; ++j)
 	{
-		for (size_t j = 0; j != config_MC; ++j)
-		{
-			scanf("%d", &token);
-			datum = (cell_t) token;
-			community_init[i][j] = datum;
-		}
+	  scanf ("%d", &token);
+	  datum = (cell_t) token;
+	  community_init[i][j] = datum;
 	}
-	printf("     ... done.\n");
+    }
+  printf ("     ... done.\n");
 
-	printf("     ... creating communities\n");
-	// copy this community to each community in env to initialize it
-	for (size_t i = 0; i != config_K; ++i)
+  printf ("     ... creating communities\n");
+  // copy this community to each community in env to initialize it
+  for (size_t i = 0; i != config_K; ++i)
+    {
+      for (size_t j = 0; j != config_L; ++j)
 	{
-		for (size_t j = 0; j != config_L; ++j)
-		{
-			transferCommunity(i, j, community_init);
-		}
+	  transferCommunity (i, j, community_init);
 	}
-	printf("     ... done.\n");
+    }
+  printf ("     ... done.\n");
 
 }
 /*
  * write changes to the environment, env, from update_env
  */
-void copyEnvironment(void)
+void copyEnvironment (void)
 {
-	// copy this community to each community in env to initialize it
-	for (size_t i = 0; i != config_NE; ++i)
+  // copy this community to each community in env to initialize it
+  for (size_t i = 0; i != config_NE; ++i)
+    {
+      for (size_t j = 0; j != config_ME; ++j)
 	{
-		for (size_t j = 0; j != config_ME; ++j)
-		{
-			env[i][j] = update_env[i][j];
-		}
+	  env[i][j] = update_env[i][j];
 	}
+    }
 }
 
 /*
  * this function updates all the cells for a thread (corresponding to one community)
  */
-void* updateCommFunc(void *param)
+void* updateCommFunc (void *param)
 {
-	while (1)
+  while (1)
+    {
+      if (reproduction_flag)
 	{
-		if (reproduction_flag)
+	  threadID_t *var = param;
+	  size_t i_0 = var->row;
+	  size_t j_0 = var->col;
+	  size_t a = i_0 * config_NC;
+	  size_t b = j_0 * config_MC;
+	  for (size_t i = 0; i != config_NC; ++i)
+	    {
+	      for (size_t j = 0; j != config_MC; ++j)
 		{
-			threadID_t *var=param;
-			size_t i_0=var->row;
-			size_t j_0=var->col;
-			size_t a=i_0*config_NC;
-			size_t b=j_0*config_MC;
-			for (size_t i=0;i!=config_NC;++i)
-			{
-				for (size_t j=0;j!=config_MC;++j)
-				{
-					updateCell(i+a,j+b);
-				}
-			}
+		  updateCell (i + a, j + b);
 		}
+	    }
 	}
-
-	// your code goes here
+    }
 }
