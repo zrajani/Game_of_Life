@@ -70,9 +70,12 @@ size_t countLiveNeighbours (size_t row, size_t col)
 	  if (i != 0 && j != 0)
 	    {
 	      cell_count = cell_count + (size_t) env[(i + config_NC) % config_NC][(j + config_MC)% config_MC];
+	      //cell_count=(size_t)env[i-1][j-1]+(size_t)env[i-1][j]+(size_t)env[i-1][j+1]+(size_t)env[i][j-1]+
+		  //(size_t)env[i][j+1]+(size_t)env[i+1][j-1]+(size_t)env[i+1][j]+(size_t)env[i+1][j+1];
 	    }
 	}
     }
+  cell_count=cell_count - env[row][col];
   return cell_count;
 }
 
@@ -100,11 +103,19 @@ void updateCell (size_t r, size_t c)
 
   if (state_cell == 0 && (live_neighbours == 3))
     {
-      update_env[r][c] = live;
+      update_env[r][c] = state_cell=live;
     }
-  else if (state_cell == 1 && (live_neighbours > 4 || live_neighbours <= 2))
+  else if (state_cell == 1 && (live_neighbours > 3))
     {
-      update_env[r][c] = dead;
+      update_env[r][c] =state_cell= dead;
+    }
+  else if (state_cell == 1 && (live_neighbours < 2))
+    {
+      update_env[r][c] =state_cell= dead;
+    }
+  else
+    {
+      update_env[r][c]=state_cell;
     }
 }
 
@@ -182,7 +193,7 @@ void* updateCommFunc (void *param)
 	    {
 	      for (size_t j = 0; j != config_MC; ++j)
 		{
-		  updateCell (i + a, j + b);
+		  updateCell (i+a, j+b);
 		}
 	    }
 	}
