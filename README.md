@@ -6,3 +6,5 @@ Source:
 
 ## Game of Life (Eclipse Software)
 
+![Game of Life Eclipse](DEMO__GOL.mp4)
+
