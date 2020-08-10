@@ -8,6 +8,11 @@ C_SRCS += \
 ../source/display.c \
 ../source/gol.c 
 
+O_SRCS += \
+../source/cells.o \
+../source/display.o \
+../source/gol.o 
+
 OBJS += \
 ./source/cells.o \
 ./source/display.o \
