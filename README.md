@@ -3,3 +3,6 @@
 Project Description: '
 
 Source: 
+
+## Game of Life (Eclipse Software)
+
