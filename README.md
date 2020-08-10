@@ -77,7 +77,7 @@ size_t countLiveNeighbours (size_t row, size_t col)
 
 The detailed version of working of this game can be found on Youtube Channel at https://youtu.be/_GVBSyjA3VA
 
-Personal View
+### Personal View
 > This project gave some challenges but made me learn how the POSIX threads work and how one can create a real time game. :+1:
 
 > This project was not possible without [Takis Zourntos](https://github.com/takiszourntos) :tada: would be grateful for his help always 
