@@ -75,7 +75,7 @@ size_t countLiveNeighbours (size_t row, size_t col)
 
 ![Game of Life Eclipse](https://github.com/zrajani/Game_of_Life/blob/master/Project%20Videos/ezgif.com-video-to-gif.gif)
 
-The detailed version of working of this game can be found on Youtube Channel at https://youtu.be/_GVBSyjA3VA
+The detailed version of working of this game can be found on Youtube Channel at [Game of Life Demonstration](https://youtu.be/_GVBSyjA3VA)
 
 ### Personal View
 > This project gave some challenges but made me learn how the POSIX threads work and how one can create a real time game. :+1:
